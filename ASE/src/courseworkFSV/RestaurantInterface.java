@@ -16,6 +16,7 @@ public class RestaurantInterface extends JFrame implements ActionListener {
 	}
 	
 	public void run(){
+		//setting dimensions of Gui
 		final int FRAME_WIDTH = 500;
 		final int FRAME_HEIGHT = 700;
 		FlowLayout flow = new FlowLayout(FlowLayout.LEFT);
