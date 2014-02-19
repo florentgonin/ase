@@ -60,5 +60,16 @@ public class Order {
 	public double totalCost(){
 		return quantity*item.getPrice();
 	}
-
+	
+	public String getMenuItemName(){
+		return item.getName();
+	}
+	
+	public int getQuantity(){
+		return quantity;
+	}
+	
+	public double getItemPrice(){
+		return item.getPrice();
+	}
 }
