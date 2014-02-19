@@ -13,13 +13,16 @@ public class Order {
 	private int orderId;
 	
 	/** The menu item ordered. */
-	private MenuItem item;
-	
+	private MenuItem item;	
+
 	/** The quantity ordered. */
 	private int quantity;
 	
-	/** The last id assigned. */
+	/** The last id assigned to a table. */
 	private static int maxID = 0;
+	
+	/** Order discount. */
+	private double[] discount = {3,0.1};
 	
     /**
      * Set up the order details. The id is assigned according to the last id assigned and this one is updated.
@@ -34,6 +37,16 @@ public class Order {
 			throw new ImpossibleQuantityException(quantity);
 		this.quantity = quantity;
 		maxID = this.orderId;
+	}
+	
+	/** Return the menu item ordered*/
+	public MenuItem getItem() {
+		return item;
+	}
+
+	/** Return the quantity ordered*/
+	public int getQuantity() {
+		return quantity;
 	}
 	
 	/**
@@ -55,19 +68,22 @@ public class Order {
 	}
 	
     /**
-     * @return the total cost the order
+     * @return the total cost of the order with a discount if necessary
      */
 	public double totalCost(){
-		return quantity*item.getPrice();
+		double totalCost = quantity*item.getPrice();
+		//apply discount if necessary
+		if(quantity>=discount[0]){
+			totalCost-=quantity*item.getPrice()*discount[1];
+		}
+		return totalCost;
 	}
 	
+
 	public String getMenuItemName(){
 		return item.getName();
 	}
 	
-	public int getQuantity(){
-		return quantity;
-	}
 	
 	public double getItemPrice(){
 		return item.getPrice();
