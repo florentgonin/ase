@@ -6,10 +6,16 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
+
+import java.util.HashSet;
+import java.util.Iterator;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import courseworkFSV.exception.ImpossiblePriceException;
 import courseworkFSV.exception.ImpossibleQuantityException;
@@ -208,14 +214,19 @@ public class Restaurant {
 	 * @param filename, string name of the exported report
 	 */
 	public void export(String filename){
-		String report = null;
+		String report = "Report:\n";
+		
+		System.out.println("Menu:\n\n" + menu.toString());// add to report
+		System.out.println("Table Summary:\n");
 		//for each table get summary
-		for(Map.Entry<Integer, List<Order>> entry : orders.entrySet()){
+		for(Integer key : orders.keySet()){
 
-			getTableSummary(entry.getKey());
+			getTableSummary(key);// add to report
 		}
+		
+		getFrequencyReport();//add to report
 
-		writeTextFile(filename, report);
+		writeTextFile(filename, report);//export report
 	}
 
 	/**
@@ -223,7 +234,7 @@ public class Restaurant {
 	 * @param tableId Unique Integer corresponding to a table.
 	 */
 	public String getTableSummary(int tableId){
-		String summary = null;
+		String summary = "Table Summary:\n";
 		double total = 0;
 		//check if the id is correct
 		if(orders.containsKey(tableId)){
@@ -242,8 +253,8 @@ public class Restaurant {
 					total += tableOrder.totalCost();
 				}
 				//total cost
-				System.out.println("Total for this table: " + total);
-				summary += "Total for this table: " + total +"\n";
+				System.out.println("Total for this table: " + total+"\n");
+				summary += "Total for this table: " + total +"\nDiscount(s) included\n";
 
 			}
 		}
@@ -255,10 +266,42 @@ public class Restaurant {
 	 * Generate a report with frequencies of each menu items
 	 */
 	public String getFrequencyReport(){
+		
+		String frequencyReport = "Frequency Report:\n";
+		System.out.println(frequencyReport);
+		//Initialize a map and set each menu item with a null frequency 
+		Map<MenuItem, Integer> frequency =  new HashMap<MenuItem,Integer>();
+		Iterator<MenuItem> it = menu.iterator();
+		while(it.hasNext()){
+			frequency.put(it.next(), 0);
+		}
+		
+		//loop over orders 
+		for (Entry<Integer, List<Order>> entry : orders.entrySet())
+		{
+		    //System.out.println(entry.getKey() + "/" + entry.getValue());
+		    //loop over List<Order>
+		    Iterator<Order> itOrder = entry.getValue().iterator();
+		    while(itOrder.hasNext()){
+		    	//get current item and quantity corresponding to the current order
+		    	Order currentOrder = itOrder.next();
+		    	MenuItem currentItem = currentOrder.getItem();
+		    	int currentQuantity = currentOrder.getQuantity();
+		    	//add quantity to frequency map
+		    	frequency.put(currentItem, frequency.get(currentItem)+currentQuantity);
+		    }
+		    
 
+		}
+		
+	    //print frequency details from frequency map
+	    for(Map.Entry<MenuItem, Integer> entry1 : frequency.entrySet()){
+	    	System.out.println(entry1.getKey().getName() +": "+ entry1.getValue());
+	    	//store frequencies
+	    	frequencyReport += entry1.getKey().getName() +": "+ entry1.getValue()+"\n";
+	    }
 
-
-		return null;
+		return frequencyReport;
 
 	}
 
