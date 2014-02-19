@@ -64,7 +64,8 @@ public class Order {
 		return item.getName().toUpperCase() + "\t" + 
 				String.valueOf(quantity) + " * " + 
 				String.valueOf(item.getPrice()) + " = " 
-				+ String.valueOf(quantity*item.getPrice());	
+				+ String.valueOf(quantity*item.getPrice())
+				+ "(-"+String.valueOf(getDiscount())+")";	
 	}
 	
     /**
@@ -74,17 +75,28 @@ public class Order {
 		double totalCost = quantity*item.getPrice();
 		//apply discount if necessary
 		if(quantity>=discount[0]){
-			totalCost-=quantity*item.getPrice()*discount[1];
+			totalCost-=getDiscount();
 		}
 		return totalCost;
 	}
 	
+    /**
+     * @return discount associated with the order
+     */
+	public double getDiscount(){
+		return quantity*item.getPrice()*discount[1];
+	}
 
+    /**
+     * @return the name of the menu item
+     */
 	public String getMenuItemName(){
 		return item.getName();
 	}
 	
-	
+    /**
+     * @return the price of the menu item
+     */
 	public double getItemPrice(){
 		return item.getPrice();
 	}
