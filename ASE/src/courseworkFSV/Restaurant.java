@@ -2,16 +2,15 @@ package courseworkFSV;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
-
 import java.util.HashSet;
 import java.util.Iterator;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -214,19 +213,28 @@ public class Restaurant {
 	 * @param filename, string name of the exported report
 	 */
 	public void export(String filename){
-		String report = "Report:\n";
-		
-		System.out.println("Menu:\n\n" + menu.toString());// add to report
+		//important "Report:\n\n" is detected by writeReport to delete the last report
+		//do not remove
+		writeReport(filename,"Report:\n\n" );
+		//write menu
+		writeReport(filename, "Menu:\n\n" + menu.toString());
+		System.out.println("Menu:\n\n" + menu.toString());
 		System.out.println("Table Summary:\n");
+		
 		//for each table get summary
+		String report = "\nTable Summaries:\n\n";
 		for(Integer key : orders.keySet()){
 
-			getTableSummary(key);// add to report
+			report+=getTableSummary(key)+"\n";
 		}
 		
-		getFrequencyReport();//add to report
-
-		writeTextFile(filename, report);//export report
+		//write table summaries
+		writeReport(filename, report);
+		//write frequencies
+		writeReport(filename, getFrequencyReport());
+		
+		//finish report
+		writeReport(filename, "\nFinish");
 	}
 
 	/**
@@ -234,7 +242,7 @@ public class Restaurant {
 	 * @param tableId Unique Integer corresponding to a table.
 	 */
 	public String getTableSummary(int tableId){
-		String summary = "Table Summary:\n";
+		String summary = "";
 		double total = 0;
 		//check if the id is correct
 		if(orders.containsKey(tableId)){
@@ -244,7 +252,7 @@ public class Restaurant {
 			if(!currentTable.isEmpty()){
 
 				System.out.println("TableId: "+tableId);
-				summary += tableId + "\n"; 
+				summary += "Table "+ tableId + " summary:\n"; 
 				//for each order of the current table, get info
 				for(Order tableOrder : currentTable){
 
@@ -267,7 +275,7 @@ public class Restaurant {
 	 */
 	public String getFrequencyReport(){
 		
-		String frequencyReport = "Frequency Report:\n";
+		String frequencyReport = "Frequency Report:\n\n";
 		System.out.println(frequencyReport);
 		//Initialize a map and set each menu item with a null frequency 
 		Map<MenuItem, Integer> frequency =  new HashMap<MenuItem,Integer>();
@@ -310,23 +318,34 @@ public class Restaurant {
 	 * @param filename, string name of the text file
 	 * @param s, string content of the text file
 	 */
-	public void writeTextFile(String fileName, String s) {
-		FileWriter output = null;
-		try {
-			output = new FileWriter(fileName);
-			BufferedWriter writer = new BufferedWriter(output);
-			writer.write(s);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		} finally {
-			if (output != null) {
-				try {
-					output.close();
-				} catch (IOException e) {
-					// Ignore issues during closing
-				}
-			}
-		}
+	public void writeReport(String fileName, String s) {
+		
+		try{
+ 
+    		File file = new File("testExport.txt");
+    		
+    		//if a new report is detected (string "Report:\n\n" is detected 
+    		//then the last report is deleted
+    		if(s.equals("Report:\n\n")){
+    			file.delete();
+    		}
+    		
+    		//if file doesnt exists, then create it
+    		if(!file.exists()){
+    			file.createNewFile();
+    		}
+    		
+    		//true = append file
+    		FileWriter fileWritter = new FileWriter(file.getName(),true);
+    	        BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
+    	        bufferWritter.write(s);
+    	        bufferWritter.close();
+ 
+	        System.out.println("Done");
+ 
+    	}catch(IOException e){
+    		e.printStackTrace();
+    	}
 
 	}
 	

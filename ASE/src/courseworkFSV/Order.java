@@ -67,7 +67,7 @@ public class Order {
 				+ String.valueOf(quantity*item.getPrice());
 		//add discount if necessary
 		if(quantity>=discount[0]){
-				s+= "(-"+String.valueOf(getDiscount())+")";	
+				s+= " (-"+String.valueOf(getDiscount())+")";	
 		}
 		return s;
 	}
