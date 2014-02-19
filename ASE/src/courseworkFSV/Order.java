@@ -61,11 +61,15 @@ public class Order {
      */
 	@Override
 	public String toString(){
-		return item.getName().toUpperCase() + "\t" + 
+		String s= item.getName().toUpperCase() + "\t" + 
 				String.valueOf(quantity) + " * " + 
 				String.valueOf(item.getPrice()) + " = " 
-				+ String.valueOf(quantity*item.getPrice())
-				+ "(-"+String.valueOf(getDiscount())+")";	
+				+ String.valueOf(quantity*item.getPrice());
+		//add discount if necessary
+		if(quantity>=discount[0]){
+				s+= "(-"+String.valueOf(getDiscount())+")";	
+		}
+		return s;
 	}
 	
     /**
@@ -84,7 +88,7 @@ public class Order {
      * @return discount associated with the order
      */
 	public double getDiscount(){
-		return quantity*item.getPrice()*discount[1];
+		return (double) Math.round(quantity*item.getPrice()*discount[1]*100)/100;
 	}
 
     /**
