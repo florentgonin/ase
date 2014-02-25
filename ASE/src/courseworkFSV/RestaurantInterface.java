@@ -81,8 +81,9 @@ public class RestaurantInterface extends JFrame implements ActionListener {
 		//adding combobox element on JFrame
 		restaurantFrame.add(tableIdChoice);
 		
+		//button for displaying report summary
 		report = new JButton("Do the report summary");
-		report.addActionListener(this);
+		report.addActionListener(this); //event is triggered by selecting it
 		restaurantFrame.add(report);
 		
 		//making first JFrame visible
