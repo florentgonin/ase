@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -261,8 +262,9 @@ public class Restaurant {
 					total += tableOrder.totalCost();
 				}
 				//total cost
-				System.out.println("Total for this table: " + total+"\n");
-				summary += "Total for this table: " + total +"\nDiscount(s) included\n";
+		        DecimalFormat format = new DecimalFormat("#.00");
+				System.out.println("Total for this table: " + format.format(total)+"\n");
+				summary += "Total for this table: " + format.format(total) +"\nDiscount(s) included\n";
 
 			}
 		}
