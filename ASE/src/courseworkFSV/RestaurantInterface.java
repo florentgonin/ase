@@ -29,6 +29,7 @@ public class RestaurantInterface extends JFrame implements ActionListener {
 	private JComboBox<String> tableIdChoice;
 	private JFrame restaurantFrame;
 	private JButton report;
+	private JButton exitSystem;
 	private JFrame tableInfo;
 	// JFrame dimensions for using in JFrames created later 
 	final int FRAME_WIDTH = 500;
@@ -86,6 +87,11 @@ public class RestaurantInterface extends JFrame implements ActionListener {
 		report.addActionListener(this); //event is triggered by selecting it
 		restaurantFrame.add(report);
 		
+		exitSystem = new JButton(" E X I T  System");
+		exitSystem.setBackground(Color.RED);
+		exitSystem.addActionListener(this);
+		restaurantFrame.add(exitSystem);
+		
 		//making first JFrame visible
 		restaurantFrame.setVisible(true);
 		
@@ -104,10 +110,15 @@ public class RestaurantInterface extends JFrame implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		
-		
+		//export report
 		if (e.getSource() == report){
 			restaurant.export("testExport.txt");
 		}
+		
+		if (e.getSource() == exitSystem ){
+			System.exit(1);
+		}
+		
 		int tblId = 0;
 		//we will use a table to show results, we declare first the column names
 		String [] columnNames = {"Item", "Amount", "Item Price", "Total Item Price"};
@@ -205,6 +216,8 @@ public class RestaurantInterface extends JFrame implements ActionListener {
 	double roundedTwoDecimals(double number){
 		int a = (int) Math.round(number*100);
 		number = a / 100.0;
+		
+		
 		return number;
 	}
 	
