@@ -1,6 +1,21 @@
 Smoked Salmon;6.00;Starter
+Prawn Cocktail;4.00;Starter
+Soup of the day;4.00;Starter
 Chicken Balerno;8.00;Main
 Roast Beef;10.00;Main
 Chocolate Cake;4.50;Dessert
 Coffee and Mints;2.50;Drink
 Carrot Soup;3.50;Starter
+Prawn Cocktail;4.00;Starter
+Soup of the day;4.00;Starter
+Pizza Bread;2.00;Starter
+Baked Mushrooms;12.00;Main
+Roasted Lamb;16.00;Main
+Pan Fried Chicken;12.00;Main
+Spagghettini;9.00;Main
+Ice Cream;4.00;Dessert
+Tiramisu;2.00;Dessert
+Profiterol;2.50;Dessert
+Coke;1.50;Drink
+Tea;1.00;Drink
+Orange juice;2.00;Drink
