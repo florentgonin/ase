@@ -6,3 +6,27 @@
 2;Carrot Soup;2
 2;Roast Beef;2
 3;Coffee and mints;2
+1;Prawn Cocktail;4
+1;Soup of the day;3
+1;Pizza Bread;4
+1;Baked Mushrooms;3
+1;Pan Fried Chicken;2
+1;Spagghettini;4
+1;Profiterol;2
+1;Tea;4
+2;Soup of the day;2
+2;Pizza Bread;5
+2;Roasted Lamb;2
+2;Pan Fried Chicken;6
+2;Ice Cream;2
+2;Profiterol;4
+2;Orange juice;2
+2;Coke;4
+2;Tiramisu;4
+3;Prawn Cocktail;1
+3;Baked Mushrooms;4
+3;Spagghettini;2
+3;Pan Fried Chicken;1
+3;Ice Cream;4
+3;Tiramisu;1
+3;Profiterol;2
