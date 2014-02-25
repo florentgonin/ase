@@ -2,13 +2,12 @@ package courseworkFSV;
 
 import java.awt.*;
 
-
-
 import javax.swing.*;
 import javax.swing.plaf.TableUI;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.event.*;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
@@ -163,6 +162,8 @@ public class RestaurantInterface extends JFrame implements ActionListener {
 				if ((int)a[1] >= 3){
 					discount +=	(((double)a[3])*0.1);
 				}
+				totalcost = roundedTwoDecimals(totalcost);
+				discount = roundedTwoDecimals(discount);
 				
 			}
 			
@@ -170,7 +171,7 @@ public class RestaurantInterface extends JFrame implements ActionListener {
 			
 			JLabel total = new JLabel("Total for this table:                          " + totalcost );
 			JLabel discountAmount = new JLabel("Discount:                                           " + discount);
-			JLabel discounted = new JLabel("Discounted total:                             " + (totalcost - discount));
+			JLabel discounted = new JLabel("Discounted total:                             " + roundedTwoDecimals(totalcost - discount));
 			total.setPreferredSize(new Dimension(490,18));
 			discountAmount.setPreferredSize(new Dimension(490,18));
 			discounted.setPreferredSize(new Dimension(490,18));
@@ -187,6 +188,16 @@ public class RestaurantInterface extends JFrame implements ActionListener {
 			
 			
 		}
+	}
+	/**
+	 * Rounds double number to 2 decimal points
+	 * @param number --> the number to be rounded to 2 decimal points
+	 * @return number rounded
+	 */
+	double roundedTwoDecimals(double number){
+		int a = (int) Math.round(number*100);
+		number = a / 100.0;
+		return number;
 	}
 	
 
