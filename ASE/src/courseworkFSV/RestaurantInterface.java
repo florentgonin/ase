@@ -31,6 +31,7 @@ public class RestaurantInterface extends JFrame implements ActionListener {
 	private JButton report;
 	private JButton exitSystem;
 	private JFrame tableInfo;
+	
 	// JFrame dimensions for using in JFrames created later 
 	final int FRAME_WIDTH = 500;
 	final int FRAME_HEIGHT = 700;
@@ -114,7 +115,7 @@ public class RestaurantInterface extends JFrame implements ActionListener {
 		if (e.getSource() == report){
 			restaurant.export("testExport.txt");
 		}
-		
+		//event for button to exit the system
 		if (e.getSource() == exitSystem ){
 			System.exit(1);
 		}
@@ -212,12 +213,12 @@ public class RestaurantInterface extends JFrame implements ActionListener {
 	 * Rounds double number to 2 decimal points
 	 * @param number --> the number to be rounded to 2 decimal points
 	 * @return number rounded
+	 * 
 	 */
 	double roundedTwoDecimals(double number){
 		int a = (int) Math.round(number*100);
 		number = a / 100.0;
-		
-		
+				
 		return number;
 	}
 	
