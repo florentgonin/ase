@@ -32,6 +32,7 @@ public class RestaurantInterface extends JFrame implements ActionListener {
 	private JButton exitSystem;
 	private JFrame tableInfo;
 	
+	
 	// JFrame dimensions for using in JFrames created later 
 	final int FRAME_WIDTH = 500;
 	final int FRAME_HEIGHT = 700;
