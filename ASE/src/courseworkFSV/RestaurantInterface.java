@@ -28,7 +28,8 @@ public class RestaurantInterface extends JFrame implements ActionListener {
 	//declaring gui objects to be used in functions later in this class 
 	private JComboBox<String> tableIdChoice;
 	private JFrame restaurantFrame;
-	JFrame tableInfo;
+	private JButton report;
+	private JFrame tableInfo;
 	// JFrame dimensions for using in JFrames created later 
 	final int FRAME_WIDTH = 500;
 	final int FRAME_HEIGHT = 700;
@@ -80,6 +81,10 @@ public class RestaurantInterface extends JFrame implements ActionListener {
 		//adding combobox element on JFrame
 		restaurantFrame.add(tableIdChoice);
 		
+		report = new JButton("Do the report summary");
+		report.addActionListener(this);
+		restaurantFrame.add(report);
+		
 		//making first JFrame visible
 		restaurantFrame.setVisible(true);
 		
@@ -99,7 +104,9 @@ public class RestaurantInterface extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		
-		
+		if (e.getSource() == report){
+			restaurant.export("testExport.txt");
+		}
 		int tblId = 0;
 		//we will use a table to show results, we declare first the column names
 		String [] columnNames = {"Item", "Amount", "Item Price", "Total Item Price"};
