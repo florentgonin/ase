@@ -1,4 +1,4 @@
-package courseworkFSV;
+package courseworkFSV.model;
 
 import java.util.HashSet;
 import java.util.Iterator;

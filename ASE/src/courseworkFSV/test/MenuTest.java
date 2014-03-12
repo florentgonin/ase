@@ -4,11 +4,11 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import courseworkFSV.Category;
-import courseworkFSV.Menu;
-import courseworkFSV.MenuItem;
 import courseworkFSV.exception.ImpossiblePriceException;
 import courseworkFSV.exception.NoMatchingDishException;
+import courseworkFSV.model.Category;
+import courseworkFSV.model.Menu;
+import courseworkFSV.model.MenuItem;
 
 public class MenuTest {
 

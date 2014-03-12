@@ -1,4 +1,4 @@
-package courseworkFSV;
+package courseworkFSV.model;
 
 public enum Category {
 

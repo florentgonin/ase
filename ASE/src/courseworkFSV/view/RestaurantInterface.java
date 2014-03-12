@@ -1,10 +1,13 @@
-package courseworkFSV;
+package courseworkFSV.view;
 
 import java.awt.*;
 
 import javax.swing.*;
 import javax.swing.plaf.TableUI;
 import javax.swing.table.DefaultTableModel;
+
+import courseworkFSV.model.Order;
+import courseworkFSV.model.Restaurant;
 
 import java.awt.event.*;
 import java.text.DecimalFormat;

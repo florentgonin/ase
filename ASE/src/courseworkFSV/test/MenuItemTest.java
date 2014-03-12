@@ -4,9 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import courseworkFSV.Category;
-import courseworkFSV.MenuItem;
 import courseworkFSV.exception.ImpossiblePriceException;
+import courseworkFSV.model.Category;
+import courseworkFSV.model.MenuItem;
 
 public class MenuItemTest {
 

@@ -1,4 +1,4 @@
-package courseworkFSV;
+package courseworkFSV.model;
 
 import courseworkFSV.exception.ImpossibleQuantityException;
 

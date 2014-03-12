@@ -4,11 +4,11 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import courseworkFSV.Category;
-import courseworkFSV.MenuItem;
-import courseworkFSV.Order;
 import courseworkFSV.exception.ImpossiblePriceException;
 import courseworkFSV.exception.ImpossibleQuantityException;
+import courseworkFSV.model.Category;
+import courseworkFSV.model.MenuItem;
+import courseworkFSV.model.Order;
 
 public class OrderTest {
 

@@ -1,5 +1,8 @@
 package courseworkFSV;
 
+import courseworkFSV.model.Restaurant;
+import courseworkFSV.view.RestaurantInterface;
+
 public class RestaurantDemo {
 
 	
