@@ -18,9 +18,9 @@ public class OrderTest {
 	@Test
 	public void testID() {
 		try {
-			Order o = new Order (null,2);
+			Order o = new Order (null,2,1);
 			int id1 = o.getOrderId();
-			Order o1 = new Order(null,2);
+			Order o1 = new Order(null,2,1);
 			int id2 = o1.getOrderId();
 			assertTrue ((id1 + 1) == id2);
 		} catch (ImpossibleQuantityException e) {
@@ -37,7 +37,7 @@ public class OrderTest {
 		MenuItem item = null;
 		try {
 			item = new MenuItem("Item",3.00,Category.STARTER);
-			Order o = new Order(item,3);
+			Order o = new Order(item,3,1);
 			assertTrue (o.totalCost() == 3*3.00);
 		} catch (ImpossiblePriceException e) {
 			//Do nothing
@@ -54,7 +54,7 @@ public class OrderTest {
 	public  void invalidQuantity() {
 		try {
 			MenuItem item = new MenuItem("A",3.00,Category.STARTER);
-			Order o = new Order(item,-3);
+			Order o = new Order(item,-3,1);
 			fail("Negatif price supplied - should throw exception");
 		}
 		catch (ImpossibleQuantityException e) {

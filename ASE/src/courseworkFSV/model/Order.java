@@ -12,6 +12,8 @@ public class Order {
 	/** The id of the order. */
 	private int orderId;
 	
+	/** The id of the table. */
+	private int tableId;
 	/** The menu item ordered. */
 	private MenuItem item;	
 
@@ -30,8 +32,9 @@ public class Order {
      * @param quantity The quantity ordered.
      * @throws ImpossibleQuantityException 
      */
-	public Order(final MenuItem item, final int quantity) throws ImpossibleQuantityException{
+	public Order(final MenuItem item, final int quantity, final int tableId) throws ImpossibleQuantityException{
 		this.item = item;
+		this.tableId = tableId;
 		this.orderId = Order.maxID + 1;
 		if (quantity <= 0) 
 			throw new ImpossibleQuantityException(quantity);
@@ -52,8 +55,15 @@ public class Order {
 	/**
      * @return The id of the order.
      */
-    public int getOrderId() {
+    public synchronized int getOrderId() {
 		return orderId;
+	}
+    
+	/**
+     * @return The id of the table.
+     */
+    public int getTableId() {
+		return tableId;
 	}
 
 	/**

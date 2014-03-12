@@ -8,15 +8,14 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import courseworkFSV.view.TestView;
 import courseworkFSV.exception.ImpossiblePriceException;
 import courseworkFSV.exception.ImpossibleQuantityException;
 import courseworkFSV.exception.NoGoodStructureDocumentException;
@@ -29,26 +28,52 @@ import courseworkFSV.exception.NoMatchingDishException;
 public class Restaurant {
 
 	/** The orders of the night sort by table. */
-	private Map<Integer, List<Order>> orders;
+	private Tables tables;
+	/** The orders in the kitchen. */
+	private Kitchen kitchen;
 	/** The menu of the restaurant. */
 	private Menu menu;
-
+	/** List of orders to treat */
+	private List<Order> orders;
 	/**
 	 * Set up the restaurant details.
 	 * @param menuFile The name of the file containing the menu.
 	 * @param ordersFile The name of the file containing the orders.
 	 */
-	public Restaurant(final String menuFile, final String ordersFile){
-		orders = new HashMap<Integer, List<Order>>();
+	private Restaurant(final String menuFile, final String ordersFile){
+		tables = new Tables();
+		kitchen = new Kitchen();
+		orders = new LinkedList<Order>();
 		importMenu(menuFile);
 		importOrders(ordersFile);
+	}
+	
+	/** Instance of the Restaurant class. */
+	private static boolean instanced= false;
+	
+	/**
+	 * Singleton
+	 * @return instance of Restaurant
+	 */
+	public static Restaurant getInstance(final String menuFile, final String orderFile){
+		if (!instanced)
+			return new Restaurant (menuFile, orderFile);
+		else
+			return null;
 	}
 
 	/**
 	 * @return The orders of the night sort by table.
 	 */ 
-	public Map<Integer, List<Order>> getOrders() {
-		return orders;
+	public Tables getOrders() {
+		return tables;
+	}
+	
+	/**
+	 * @return The orders in the kitchen.
+	 */ 
+	public List<Order> getKitchenOrders() {
+		return kitchen;
 	}
 
 	/**
@@ -150,17 +175,10 @@ public class Restaurant {
 				int tableID = Integer.parseInt(data[0].trim());
 				MenuItem item = menu.foundByName(data[1].trim());
 				int quantity = Integer.parseInt(data[2].trim());
-				Order  order = new Order(item, quantity);
+				Order  order = new Order(item, quantity, tableID);
 
-				//add to the orders map
-				if (orders.containsKey(tableID)) {
-					List<Order> l = orders.get(tableID);
-					l.add(order);
-				} else {
-					List<Order> l = new LinkedList<Order>();
-					l.add(order);
-					orders.put(tableID,l);
-				}
+				//add to the list of orders to treat
+				orders.add(order);
 
 				//read next line
 				inputLine = buff.readLine();
@@ -213,7 +231,7 @@ public class Restaurant {
 	 * Generate a report and export it as a text file
 	 * @param filename, string name of the exported report
 	 */
-	public void export(String filename){
+	public void export(final String filename){
 		//important "Report:\n\n" is detected by writeReport to delete the last report
 		//do not remove
 		writeReport(filename,"Report:\n\n" );
@@ -224,7 +242,7 @@ public class Restaurant {
 		
 		//for each table get summary
 		String report = "\nTable Summaries:\n\n";
-		for(Integer key : orders.keySet()){
+		for(Integer key : tables.keySet()){
 
 			report+=getTableSummary(key)+"\n";
 		}
@@ -242,13 +260,13 @@ public class Restaurant {
 	 * Generate a summary of orders from a particular table
 	 * @param tableId Unique Integer corresponding to a table.
 	 */
-	public String getTableSummary(int tableId){
+	public String getTableSummary(final int tableId){
 		String summary = "";
 		double total = 0;
 		//check if the id is correct
-		if(orders.containsKey(tableId)){
+		if(tables.containsKey(tableId)){
 
-			List<Order> currentTable = orders.get(tableId);
+			List<Order> currentTable = tables.get(tableId);
 			//check if the list of orders is not empty
 			if(!currentTable.isEmpty()){
 
@@ -287,7 +305,7 @@ public class Restaurant {
 		}
 		
 		//loop over orders 
-		for (Entry<Integer, List<Order>> entry : orders.entrySet())
+		for (Entry<Integer, List<Order>> entry : tables.entrySet())
 		{
 		    //System.out.println(entry.getKey() + "/" + entry.getValue());
 		    //loop over List<Order>
@@ -320,7 +338,7 @@ public class Restaurant {
 	 * @param filename, string name of the text file
 	 * @param s, string content of the text file
 	 */
-	public void writeReport(String fileName, String s) {
+	public void writeReport(final String fileName, final String s) {
 		
 		try{
  
@@ -349,6 +367,18 @@ public class Restaurant {
     		e.printStackTrace();
     	}
 
+	}
+	
+	public void start () {
+		System.out.println("Running ");
+		
+		Thread thread4 = new Thread(new ToTables(kitchen,tables));
+		thread4.start();
+		
+		Thread thread3 = new Thread(new ToKitchen(kitchen,orders));
+		thread3.start();
+		TestView t = new TestView(kitchen);
+		t.run();
 	}
 	
 }
