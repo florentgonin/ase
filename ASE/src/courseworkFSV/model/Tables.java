@@ -11,6 +11,20 @@ public class Tables extends HashMap<Integer, List<Order>> implements Observable{
 	/** Observers of the tables */
 	private Set<Observer> observers;
 	
+	/** Log of the tables */
+	private String tableLog;
+	
+	/** return the kitchen log */
+	public String getTableLog() {
+		return tableLog;
+	}
+	
+	/** set the kitchen log */
+	public void setTableLog(String action ) {
+		tableLog+=action+"\n";
+	}
+	
+	
 	/**
 	 * Set up the structure : HashMap<Integer, List<Order>>
 	 */
@@ -34,6 +48,8 @@ public class Tables extends HashMap<Integer, List<Order>> implements Observable{
 			this.put(tableID,l);
 		}
 		System.out.println(order.getOrderId() +" moved to Tables");
+		//add to table log
+		setTableLog("Order " + order.getOrderId() + " sent to table " + tableID );
 		//update view display
 		notifyObservers();
 	}

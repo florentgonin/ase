@@ -280,6 +280,25 @@ public class Restaurant {
 	}
 
 	/**
+	 * Generate a log and export it as a text file
+	 * @param filename, string name of the exported report
+	 */
+	public void exportLog(final String filename){
+		//important "Report:\n\n" is detected by writeReport to delete the last report
+		//do not remove
+		writeReport(filename,"Report:\n\n" );
+		//write kitchen log
+		writeReport(filename, "Kitchen Log:\n\n" + kitchen.getKitchenLog());	
+		//write hatch log
+		writeReport(filename, "Kitchen Log:\n\n" + hatch.getHatchLog());	
+		//write tables log
+		writeReport(filename, "Tables Log:\n\n" + tables.getTableLog());		
+		//finish report
+		writeReport(filename, "\nFinish");
+	}
+	
+	
+	/**
 	 * Generate a summary of orders from a particular table
 	 * @param tableId Unique Integer corresponding to a table.
 	 */
@@ -365,7 +384,7 @@ public class Restaurant {
 		
 		try{
  
-    		File file = new File("testExport.txt");
+    		File file = new File(fileName);
     		
     		//if a new report is detected (string "Report:\n\n" is detected 
     		//then the last report is deleted

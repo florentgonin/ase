@@ -10,6 +10,21 @@ public class Hatch extends LinkedList<Order> implements Observable{
 		private Set<Observer> observers;
 		/** state of the hatch */
 		private boolean finished =false;
+		
+		/** Log of the hatch */
+		private String hatchLog="";
+		
+		/** return the hatch log */
+		public String getHatchLog() {
+			return hatchLog;
+		}
+		
+		/** set the hatch log */
+		public void setHatchLog(String action ) {
+			hatchLog+=action+"\n";
+		}
+		
+		
 		/**
 		 * Set up the structure : LinkedList<Order>
 		 */
@@ -48,6 +63,8 @@ public class Hatch extends LinkedList<Order> implements Observable{
 		@Override
 		public synchronized boolean add(Order o) {
 			System.out.println(o.getOrderId() +" moved to hatch");
+			//add to hatch log
+			setHatchLog(o.getOrderId() +" added");
 			notifyObservers();
 			return super.add(o);
 		}
@@ -58,6 +75,8 @@ public class Hatch extends LinkedList<Order> implements Observable{
 		@Override
 		public synchronized Order remove(int index) {
 			Order o = this.get(index);
+			//remove from hatch log
+			setHatchLog(o.getOrderId() +" removed");
 			notifyObservers();
 			return super.remove(index);
 		}

@@ -11,6 +11,21 @@ public class Kitchen extends ArrayList<Order> implements Observable {
 	private Set<Observer> observers;
 	/** state of the kitchen */
 	private boolean finished =false;
+	
+	/** Log of the kitchen */
+	private String kitchenLog="";
+	
+	/** return the kitchen log */
+	public String getKitchenLog() {
+		return kitchenLog;
+	}
+	
+	/** set the kitchen log */
+	public void setKitchenLog(String action ) {
+		kitchenLog+=action+"\n";
+	}
+	
+	
 	/** 
 	 * Set up the structure :  LinkedList<Order> 
 	 */
@@ -49,6 +64,8 @@ public class Kitchen extends ArrayList<Order> implements Observable {
 	@Override
 	public synchronized boolean add(Order o) {
 		System.out.println(o.getOrderId() +" moved to kitchen");
+		//add to kitchen log
+		setKitchenLog(o.getOrderId() +" added");
 		notifyObservers();
 		return super.add(o);
 	}
@@ -59,6 +76,8 @@ public class Kitchen extends ArrayList<Order> implements Observable {
 	@Override
 	public synchronized Order remove(int index) {
 		Order o = this.get(index);
+		//remove from kitchen log
+		setKitchenLog(o.getOrderId() +" removed");
 		notifyObservers();
 		return super.remove(index);
 	}
