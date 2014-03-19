@@ -15,8 +15,7 @@ public class RestaurantDemo {
 		//RestaurantInterface c = new RestaurantInterface(restaurant);
 
 		//export log
-		while(!restaurant.getToTables().getState().equals(Thread.State.TERMINATED)){
-		}
+		while(!restaurant.getToTables().getState().equals(Thread.State.TERMINATED)){}
 
 		restaurant.exportLog("RestoLog.txt");
 	}

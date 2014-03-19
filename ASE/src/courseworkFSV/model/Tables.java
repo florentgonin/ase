@@ -15,7 +15,7 @@ public class Tables extends HashMap<Integer, List<Order>> implements Observable{
 	private boolean finished = false;
 	
 	/** Log of the tables */
-	private String tableLog;
+	private String tableLog="";
 	
 	/** return the kitchen log */
 	public String getTableLog() {
