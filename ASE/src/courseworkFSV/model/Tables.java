@@ -33,7 +33,7 @@ public class Tables extends HashMap<Integer, List<Order>> implements Observable{
 			l.add(order);
 			this.put(tableID,l);
 		}
-		
+		System.out.println(order.getOrderId() +" moved to Tables");
 		//update view display
 		notifyObservers();
 	}

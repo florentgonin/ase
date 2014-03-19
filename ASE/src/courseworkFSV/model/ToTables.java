@@ -1,23 +1,20 @@
 package courseworkFSV.model;
 
-
-
 public class ToTables implements Runnable {
 
-private Kitchen kitchen;
+private Hatch hatch;
 private Tables tables;
 	
-	public ToTables(final Kitchen kitchen, final Tables tables) {
-		this.kitchen=kitchen;
+	public ToTables(final Hatch hatch, final Tables tables) {
+		this.hatch = hatch;
 		this.tables=tables;
 	}
 
 
 	public void run() {
-
-		while(!kitchen.getFinished()){
-			if (!kitchen.isEmpty()) {
-				Order currentOrder = kitchen.get(0);
+		while(!hatch.getFinished()){
+			if (!hatch.isEmpty()) {
+				Order currentOrder = hatch.get(0);
 				
 				int sec = 1 + (int)(Math.random()*5); 
 				try {
@@ -26,7 +23,7 @@ private Tables tables;
 					System.out.println(e.getMessage());
 				}
 				tables.addAnOrder(currentOrder.getTableId(), currentOrder);
-				kitchen.remove(0);
+				hatch.remove(0);
 			}
 		}
 	}

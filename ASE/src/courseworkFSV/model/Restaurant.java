@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -31,6 +32,8 @@ public class Restaurant {
 	private Tables tables;
 	/** The orders in the kitchen. */
 	private Kitchen kitchen;
+	/** Hatch of the restaurant. */
+	private Hatch hatch;
 	/** The menu of the restaurant. */
 	private Menu menu;
 	/** List of orders to treat */
@@ -43,9 +46,11 @@ public class Restaurant {
 	private Restaurant(final String menuFile, final String ordersFile){
 		tables = new Tables();
 		kitchen = new Kitchen();
+		hatch = new Hatch();
 		orders = new LinkedList<Order>();
 		importMenu(menuFile);
-		importOrders(ordersFile);
+		/*importOrders(ordersFile);*/
+		createOrdersRandomly(15);
 	}
 	
 	/** Instance of the Restaurant class. */
@@ -225,7 +230,25 @@ public class Restaurant {
 		}
 	}
 	
-	
+	/**
+	 * Fills the orders list with orders created randomly.
+	 */ 
+	public void createOrdersRandomly(int n) {
+		List<MenuItem> list = new ArrayList<MenuItem>(menu);
+		int nbItems = list.size() - 1;
+		for (int i = 0; i < n; i++) {
+			int itemIndex = 1 + (int)(Math.random()*nbItems);
+			int tableId = 1 + (int)(Math.random()*3); 
+			int quantity = 1 + (int)(Math.random()*3);
+			Order o = null;
+			try {
+				o = new Order (list.get(itemIndex), quantity, tableId);
+				orders.add(o);
+			} catch (ImpossibleQuantityException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	/**
 	 * Generate a report and export it as a text file
@@ -372,11 +395,15 @@ public class Restaurant {
 	public void start () {
 		System.out.println("Running ");
 		
-		Thread thread4 = new Thread(new ToTables(kitchen,tables));
-		thread4.start();
+		Thread toTables = new Thread(new ToTables(hatch,tables));
+		toTables.start();
 		
-		Thread thread3 = new Thread(new ToKitchen(kitchen,orders));
-		thread3.start();
+		Thread toHatch = new Thread(new ToHatch (kitchen,hatch));
+		toHatch.start();
+		
+		Thread toKitchen = new Thread(new ToKitchen(kitchen,orders));
+		toKitchen.start();
+		
 		TestView t = new TestView(kitchen);
 		t.run();
 	}

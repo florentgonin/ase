@@ -9,6 +9,7 @@ import courseworkFSV.view.Observer;
 public class Kitchen extends ArrayList<Order> implements Observable {
 	/** Observers of the tables */
 	private Set<Observer> observers;
+	/** state of the kitchen */
 	private boolean finished =false;
 	/** 
 	 * Set up the structure :  LinkedList<Order> 
@@ -18,30 +19,46 @@ public class Kitchen extends ArrayList<Order> implements Observable {
 		observers = new HashSet<Observer>();
 	}
 	
+	/**
+	 * Notifies that all the orders has been sent to the kitchen
+	 * @return true if all the orders has been sent to the kitchen.
+	 */
 	public void setFinished () {
 		finished = true;
 	}
 	
+	/**
+	 * Tests if all the orders has been sent to the kitchen.
+	 * @return true if all the orders has been sent to the kitchen.
+	 */
 	public boolean getFinished() {
 		return finished;
 	}
 
+	/**
+	 * Get an order of the kitchen.
+	 */
 	@Override
 	public synchronized Order get(int index) {
 		return super.get(index);
 	}
 
+	/**
+	 * Adds an order of the kitchen and notify the observers.
+	 */
 	@Override
 	public synchronized boolean add(Order o) {
-		System.out.println(o.getOrderId() +" added");
+		System.out.println(o.getOrderId() +" moved to kitchen");
 		notifyObservers();
 		return super.add(o);
 	}
 	
+	/**
+	 * Removes an order of the kitchen and notify the observers.
+	 */
 	@Override
 	public synchronized Order remove(int index) {
 		Order o = this.get(index);
-		System.out.println(o.getOrderId() +" removed");
 		notifyObservers();
 		return super.remove(index);
 	}
