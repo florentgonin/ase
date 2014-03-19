@@ -11,6 +11,9 @@ public class Tables extends HashMap<Integer, List<Order>> implements Observable{
 	/** Observers of the tables */
 	private Set<Observer> observers;
 	
+	/** state of the tables */
+	private boolean finished = false;
+	
 	/** Log of the tables */
 	private String tableLog;
 	

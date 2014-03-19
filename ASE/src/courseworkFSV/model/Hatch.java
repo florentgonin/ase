@@ -9,7 +9,7 @@ public class Hatch extends LinkedList<Order> implements Observable{
 		/** Observers of the hatch */
 		private Set<Observer> observers;
 		/** state of the hatch */
-		private boolean finished =false;
+		private boolean finished = false;
 		
 		/** Log of the hatch */
 		private String hatchLog="";

@@ -26,5 +26,17 @@ private Tables tables;
 				hatch.remove(0);
 			}
 		}
+		while (!hatch.isEmpty()) {
+			Order currentOrder = hatch.get(0);
+			
+			int sec = 1 + (int)(Math.random()*5); 
+			try {
+				Thread.sleep(sec*1000);
+			} catch (InterruptedException e) {
+				System.out.println(e.getMessage());
+			}
+			tables.addAnOrder(currentOrder.getTableId(), currentOrder);
+			hatch.remove(0);
+		}
 	}
 }

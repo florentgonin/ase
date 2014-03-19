@@ -7,7 +7,7 @@ public class ToHatch implements Runnable {
 	private Hatch hatch;
 	/** kitchen to take the orders */
 	private Kitchen kitchen;
-	
+
 	/**
 	 * Set up attributes
 	 * @param kitchen kitchen to take the orders.
@@ -18,7 +18,7 @@ public class ToHatch implements Runnable {
 		this.hatch = hatch;
 	}
 
-	
+
 	/**
 	 * Sends orders to hatch.
 	 */
@@ -26,7 +26,7 @@ public class ToHatch implements Runnable {
 		while(!kitchen.getFinished()){
 			if (!kitchen.isEmpty()) {
 				Order currentOrder = kitchen.get(0);
-				
+
 				int sec = 1 + (int)(Math.random()*5); 
 				try {
 					Thread.sleep(sec*1000);
@@ -36,6 +36,18 @@ public class ToHatch implements Runnable {
 				hatch.add(currentOrder);
 				kitchen.remove(0);
 			}
+		}
+		while(!kitchen.isEmpty()){
+			Order currentOrder = kitchen.get(0);
+
+			int sec = 1 + (int)(Math.random()*5); 
+			try {
+				Thread.sleep(sec*1000);
+			} catch (InterruptedException e) {
+				System.out.println(e.getMessage());
+			}
+			hatch.add(currentOrder);
+			kitchen.remove(0);
 		}
 		hatch.setFinished();
 	}

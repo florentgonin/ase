@@ -38,6 +38,13 @@ public class Restaurant {
 	private Menu menu;
 	/** List of orders to treat */
 	private List<Order> orders;
+	
+	private Thread toTables;
+	
+	public Thread getToTables() {
+		return toTables;
+	}
+
 	/**
 	 * Set up the restaurant details.
 	 * @param menuFile The name of the file containing the menu.
@@ -50,7 +57,7 @@ public class Restaurant {
 		orders = new LinkedList<Order>();
 		importMenu(menuFile);
 		/*importOrders(ordersFile);*/
-		createOrdersRandomly(15);
+		createOrdersRandomly(4);
 	}
 	
 	/** Instance of the Restaurant class. */
@@ -65,6 +72,13 @@ public class Restaurant {
 			return new Restaurant (menuFile, orderFile);
 		else
 			return null;
+	}
+	
+	/**
+	 * @return The hatch of the restaurant
+	 */
+	public Hatch getHatch(){
+		return hatch;
 	}
 
 	/**
@@ -290,9 +304,9 @@ public class Restaurant {
 		//write kitchen log
 		writeReport(filename, "Kitchen Log:\n\n" + kitchen.getKitchenLog());	
 		//write hatch log
-		writeReport(filename, "Kitchen Log:\n\n" + hatch.getHatchLog());	
+		writeReport(filename, "\n\n Hatch Log:\n\n" + hatch.getHatchLog());	
 		//write tables log
-		writeReport(filename, "Tables Log:\n\n" + tables.getTableLog());		
+		writeReport(filename, "\n\n Tables Log:\n\n" + tables.getTableLog());		
 		//finish report
 		writeReport(filename, "\nFinish");
 	}
@@ -414,7 +428,7 @@ public class Restaurant {
 	public void start () {
 		System.out.println("Running ");
 		
-		Thread toTables = new Thread(new ToTables(hatch,tables));
+		toTables = new Thread(new ToTables(hatch,tables));
 		toTables.start();
 		
 		Thread toHatch = new Thread(new ToHatch (kitchen,hatch));
@@ -423,8 +437,11 @@ public class Restaurant {
 		Thread toKitchen = new Thread(new ToKitchen(kitchen,orders));
 		toKitchen.start();
 		
+		//GUI
 		TestView t = new TestView(kitchen);
 		t.run();
+		
+
 	}
 	
 }
